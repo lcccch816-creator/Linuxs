@@ -420,41 +420,41 @@ int show_bmp(const char *bmp_name,int start_x,int start_y)
 
 
 //把一张任意尺寸的BMP图片等比例且不失真的缩小为原来的1/2，并生成一张新的BMP图片，要求BMP图片的路径都需要通过命令行进行传递。
-int main(int argc, const char *argv[])
-{
-    if(argc != 3)
-    {
-        printf("usage:./a.out bmp_name bmp_save_name\n");
-        exit(-1);
-    }
-    //1.打开BMP图片
-    FILE *bmp_fp = fopen(argv[1],"rb");
-    if(bmp_fp == NULL)
-    {
-        printf("open bmp file failed\n");
-        exit(-1);
-    }
-    //2.读取BMP文件的图像信息，获取BMP的宽和高
-    BITMAPINFOHEADER headerinfo;
-    fseek(bmp_fp,14,SEEK_SET);
-    fread(&headerinfo,1,40,bmp_fp);
-    printf("bmp width = %d\n,bmp height = %d\n",headerinfo.biWidth,headerinfo.biHeight);
-    //3.读取BMP图像数据
-    char bmp_buffer[headerinfo.biWidth*headerinfo.biHeight*3];
-    memset(bmp_buffer,0,sizeof(bmp_buffer));//手动清零
-    fread(bmp_buffer,1,sizeof(bmp_buffer),bmp_fp);
-    fclose(bmp_fp);
+// int main(int argc, const char *argv[])
+// {
+//     if(argc != 3)
+//     {
+//         printf("usage:./a.out bmp_name bmp_save_name\n");
+//         exit(-1);
+//     }
+//     //1.打开BMP图片
+//     FILE *bmp_fp = fopen(argv[1],"rb");
+//     if(bmp_fp == NULL)
+//     {
+//         printf("open bmp file failed\n");
+//         exit(-1);
+//     }
+//     //2.读取BMP文件的图像信息，获取BMP的宽和高
+//     BITMAPINFOHEADER headerinfo;
+//     fseek(bmp_fp,14,SEEK_SET);
+//     fread(&headerinfo,1,40,bmp_fp);
+//     printf("bmp width = %d\n,bmp height = %d\n",headerinfo.biWidth,headerinfo.biHeight);
+//     //3.读取BMP图像数据
+//     char bmp_buffer[headerinfo.biWidth*headerinfo.biHeight*3];
+//     memset(bmp_buffer,0,sizeof(bmp_buffer));//手动清零
+//     fread(bmp_buffer,1,sizeof(bmp_buffer),bmp_fp);
+//     fclose(bmp_fp);
 
-    //4.创建一张新的BMP图片，宽高为原来的一半
-    FILE *new_bmp_fp = fopen(argv[2],"wb");
-    if(new_bmp_fp == NULL)
-    {
-        printf("open new bmp file failed\n");
-        exit(-1);
-    }
-    //5.写入BMP文件头
-    fwrite("BM",1,2,new_bmp_fp);
-    int file_size = 54 + headerinfo.biWidth/2 * headerinfo.biHeight/2 * 3;
-    fwrite(&file_size,1,4,new_bmp_fp);
+//     //4.创建一张新的BMP图片，宽高为原来的一半
+//     FILE *new_bmp_fp = fopen(argv[2],"wb");
+//     if(new_bmp_fp == NULL)
+//     {
+//         printf("open new bmp file failed\n");
+//         exit(-1);
+//     }
+//     //5.写入BMP文件头
+//     fwrite("BM",1,2,new_bmp_fp);
+//     int file_size = 54 + headerinfo.biWidth/2 * headerinfo.biHeight/2 * 3;
+//     fwrite(&file_size,1,4,new_bmp_fp);
 
-}
+// }
